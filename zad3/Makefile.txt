@@ -1,0 +1,19 @@
+CFLAGS=-Wall -O2 -std=c++11
+CO=-c
+
+all: kontroler.o sejf.o test.o test
+
+kontroler.o: kontroler.h kontroler.cc sejf.h
+	g++ $(CFLAGS) $(CO) kontroler.cc -o kontroler.o
+
+sejf.o: sejf.h sejf.cc kontroler.o
+	g++ $(CFLAGS) $(CO) sejf.cc -o sejf.o
+
+test.o: test.cc sejf.o kontroler.o
+	g++ $(CFLAGS) $(CO) test.cc -o test.o
+
+test: test.o sejf.o kontroler.o
+	g++ $(CFLAGS) sejf.o kontroler.o test.o -o test
+
+clean:
+	rm *.o
